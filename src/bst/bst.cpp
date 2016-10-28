@@ -42,7 +42,22 @@ BST<T>::BST(T val)
     root_ = new Node<T>(val);
 }
 
+template <class T>
+BST<T>::~BST()
+{
+     preorder_delete(root_);  
+}
 
+template <class T>
+int BST<T>::preorder_delete(Node<T> *current)
+{
+    if(current != nullptr) {
+        preorder_delete(current.left_);
+        preorder_delete(current.right_);
+        delete current;
+    }
+    return 1;
+}
 template <class T>
 int BST<T>::insert(T value)
 {
@@ -168,9 +183,24 @@ template <class T>
 int BST<T>::remove(T value)
 {
     Node<T> *delete_node = find_node(value);
-
+    Node<T> *parent_node; 
+    Node<T> *left = delete_node.left_;
+    Node<T> *right = delete_node.right_;
     if(delete_node == nullptr) {
-        return -1;
+        return 0;
     }
+    parent_node = find_parent(delete_node);
+    if(delete_node.left_ != nullptr && delete_node.right == nullptr) {
+        if(delete_node.value_ < parent_node.value_) {
+            delete delete_node;
+            parent_node.left_ = nullptr;  
+        } else {
+            delete delete_node;
+            parent_node.right_ = nullptr;
+        }
+    }     
+    
+    return 0;   
+
 }
 

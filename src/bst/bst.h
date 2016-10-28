@@ -5,6 +5,8 @@ class Node
         Node();
         Node(T value);
         Node(T value, Node *left, Node *right);
+        ~Node();
+
     public:
         T value_; 
         Node *right_;
@@ -20,6 +22,10 @@ class BST
     public:
         BST();
         BST(T value); 
+        ~BST();
+        
+        int preorder_delete(Node<T> *current);
+        
         int insert(T value);        
         int insert_node(Node<T> *current, T value);
 
@@ -31,6 +37,8 @@ class BST
         Node<T>* find_max(Node<T> *current);
 
         int remove(T value);
+        
+
     private:
         Node<T> *root_;
 };
