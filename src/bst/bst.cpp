@@ -48,7 +48,7 @@ int BST<T>::insert(T value)
 }
 
 template <class T>
-int insert_node(Node<T> *current, T value)
+int BST<T>::insert_node(Node<T> *current, T value)
 {
     if(value < current.value_)  {
         if(current.left_ == nullptr) {
@@ -67,15 +67,78 @@ int insert_node(Node<T> *current, T value)
 }
 
 template <class T>
-int contains(Node<T> *current, T value)
+bool BST<T>::contains(T value)
 {
-    return 1;
+    return contains(root_, value);
+}
+
+template <class T>
+bool BST<T>::contains(Node<T> *current, T value)
+{
+    if(current == nullptr) {
+        return false;
+    }
+    if(current.value_ == value) {
+        return true;
+    } else if(current.value_ < value) {
+        return contains(current.right_, value);
+    } else {
+        return contains(current.left_, value);
+    }
+}
+
+template <class T>
+Node<T>* BST<T>::find_node(Node<T> *current, T value)
+{
+    if(current == nullptr) {
+        return nullptr;   
+    }
+    if(current.value_ == value) {
+        return current;
+    } else if(value < current.value_) {
+        return find_node(current.left_, value);
+    } else {
+        return find_node(current.right_, value);
+    }
+
+    return nullptr;
+}
+
+template <class T>
+Node<T>* BST<T>::find_min(Node<T> *current) 
+{
+    if(current == nullptr) {
+        return nullptr;
+    } 
+    if(current.left_ == nullptr) {
+        return current;
+    } else {
+        return find_min(current.left_);
+    }
+}
+
+template <class T>
+Node<T>* BST<T>::find_max(Node<T> *current)
+{
+    if(current == nullptr) {
+        return nullptr;
+    }
+    if(current.right_ == nullptr) {
+        return current;
+    } else {
+        return find_max(current.right_);
+    }
 }
 
 
 template <class T>
-int remove(T value)
+int BST<T>::remove(T value)
 {
-    return 1;
+    Node<T> *delete_node = find_node(value);
+
+    if(delete_node == nullptr) {
+        return -1;
+    }
+
 }
 

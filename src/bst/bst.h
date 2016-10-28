@@ -22,7 +22,14 @@ class BST
         BST(T value); 
         int insert(T value);        
         int insert_node(Node<T> *current, T value);
-        int contains(Node<T> *current, T value);
+
+        bool contains(T value);
+        bool contains(Node<T> *current, T value);
+
+        Node<T>* find_node(Node<T> *current, T value);
+        Node<T>* find_min(Node<T> *current);
+        Node<T>* find_max(Node<T> *current);
+
         int remove(T value);
     private:
         Node<T> *root_;
