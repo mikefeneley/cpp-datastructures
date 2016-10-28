@@ -24,6 +24,13 @@ Node<T>::Node(T value, Node *right, Node *left)
 }
 
 template <class T>
+Node<T>::~Node()
+{
+    delete(value_);
+}
+
+
+template <class T>
 BST<T>::BST()
 {
     root_ = nullptr;
@@ -132,6 +139,32 @@ Node<T>* BST<T>::find_max(Node<T> *current)
 
 
 template <class T>
+Node<T>* find_parent(Node<T> *current, T value)
+{
+    if(current.value_ == value) {
+        return nullptr;
+    }
+    if(value < current.value_) {
+        if(current.left_ == nullptr) {
+            return nullptr;
+        } else if(current.left_.value_ == value) {
+            return current;
+        } else {
+            return find_parent(current.left_, value);
+        }
+    } else {
+        if(current.right_ == nullptr) {
+            return nullptr;
+        } else if(current.right_.value_ == value) {
+            return current;
+        } else {
+            return find_parent(current.right_, value);
+        }
+    }
+    return nullptr;
+}
+
+template <class T>
 int BST<T>::remove(T value)
 {
     Node<T> *delete_node = find_node(value);
@@ -139,6 +172,5 @@ int BST<T>::remove(T value)
     if(delete_node == nullptr) {
         return -1;
     }
-
 }
 
